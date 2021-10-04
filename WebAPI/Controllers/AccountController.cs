@@ -26,14 +26,8 @@ namespace WebAPI.ServiceLayer.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<AccountDetail>> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new AccountDetail
-            {
-                Id = Guid.NewGuid(),
-                CreationDate = DateTime.Now.AddDays(index),
-                Name = "Testone",
-                MemberGender = Gender.Unknown,
-            }).ToArray();
+            IEnumerable<AccountDetail> accounts = _logic.GetAllAccountDetail();
+            return Ok(accounts);
         }
 
         [HttpGet("{id}")]
