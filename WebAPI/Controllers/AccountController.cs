@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Domain.DTO;
+using WebAPI.Domain.Enum;
 using WebAPI.Domain.Interfaces.Logics;
 
 namespace WebAPI.ServiceLayer.Controllers
@@ -12,14 +13,8 @@ namespace WebAPI.ServiceLayer.Controllers
     [ApiController]
     [Route("[controller]")]
     public class AccountController : ControllerBase
-    {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+    {       
         private readonly ILogger<AccountController> _logger;
-
         private readonly IAccountLogic _logic;
 
         public AccountController(ILogger<AccountController> logger, IAccountLogic logic)
@@ -29,38 +24,38 @@ namespace WebAPI.ServiceLayer.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<WeatherForecast>> Get()
+        public ActionResult<IEnumerable<AccountDetail>> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index => new AccountDetail
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                Id = Guid.NewGuid(),
+                CreationDate = DateTime.Now.AddDays(index),
+                Name = "Testone",
+                MemberGender = Gender.Unknown,
+            }).ToArray();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<WeatherForecast> Get(int id)
+        public ActionResult<AccountDetail> Get(int id)
         {
-            return Ok(new WeatherForecast());
+            return Ok(new AccountDetail());
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] WeatherForecast value)
+        public ActionResult Post([FromBody] AccountCreation value)
         {
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public ActionResult Remove(int id, [FromBody] WeatherForecast value)
+        public ActionResult Update(int id, [FromBody] AccountUpdate value)
         {
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Remove(int id)
+        public ActionResult Remove(int id, [FromBody] AccountDelete value)
         {
             return Ok();
         }
