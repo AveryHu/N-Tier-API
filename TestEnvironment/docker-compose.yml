@@ -1,0 +1,9 @@
+version: "3.8"
+services:   
+   db:
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      environment:
+         - ACCEPT_EULA=Y
+         - SA_PASSWORD=<Pass!W0rd>
+      ports:
+         - "1433:1433"
