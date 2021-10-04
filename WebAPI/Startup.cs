@@ -27,6 +27,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            AddLogics(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
