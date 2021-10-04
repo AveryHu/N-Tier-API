@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Domain.DTO;
 
-namespace WebAPI.Controllers
+namespace WebAPI.ServiceLayer.Controllers
 {
     [ApiController]
     [Route("[controller]")]
