@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Domain.DTO;
+using WebAPI.Domain.Interfaces.Logics;
 
 namespace WebAPI.ServiceLayer.Controllers
 {
@@ -19,9 +20,12 @@ namespace WebAPI.ServiceLayer.Controllers
 
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(ILogger<AccountController> logger)
+        private readonly IAccountLogic _logic;
+
+        public AccountController(ILogger<AccountController> logger, IAccountLogic logic)
         {
             _logger = logger;
+            _logic = logic;
         }
 
         [HttpGet]

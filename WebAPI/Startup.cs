@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.BusinessLayer.Logics;
+using WebAPI.Domain.Interfaces.Logics;
 
 namespace WebAPI
 {
@@ -44,5 +46,11 @@ namespace WebAPI
                 endpoints.MapControllers();
             });
         }
+
+        private void AddLogics(IServiceCollection services)
+        {
+            services.AddScoped<IAccountLogic, AccountLogic>();
+        }
+
     }
 }

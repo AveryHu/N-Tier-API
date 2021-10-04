@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebAPI.BusinessLayer\WebAPI.BusinessLayer.csproj" />
     <ProjectReference Include="..\WebAPI.Domain\WebAPI.Domain.csproj" />
   </ItemGroup>
 
