@@ -1,5 +1,5 @@
 ﻿using System;
-using WebAPI.Domain.Interfaces;
+using WebAPI.Domain.Interfaces.Logics;
 
 namespace WebAPI.BusinessLayer
 {
