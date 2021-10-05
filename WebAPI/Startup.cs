@@ -46,7 +46,7 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            dbContext.Database.EnsureCreated();
+            dbContext.Database.Migrate();
 
             app.UseRouting();
 

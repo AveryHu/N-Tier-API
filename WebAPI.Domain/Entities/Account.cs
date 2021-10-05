@@ -7,8 +7,7 @@ namespace WebAPI.Domain.Entities
 {
     public class Account
     {
-		public int Identity { get; set; }
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Password { get; set; }
 		public DateTime CreationDate { get; set; }
