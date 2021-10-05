@@ -35,7 +35,7 @@ namespace WebAPI
             services.AddControllers();            
             InitDbContext(services);
             AddRepositorys(services);
-            AddLogics(services);
+            AddUnitOfWorkandLogics(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,8 +71,9 @@ namespace WebAPI
             services.AddTransient<IAccountRepository, AccountRepository>();
         }
 
-        private void AddLogics(IServiceCollection services)
+        private void AddUnitOfWorkandLogics(IServiceCollection services)
         {
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountLogic, AccountLogic>();
         }
 
