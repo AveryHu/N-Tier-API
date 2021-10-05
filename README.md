@@ -8,4 +8,10 @@
 ## Developement environment
 
 *Visual Studio 2019*  
-*.NET Core 3.1*
+*.NET Core 3.1*  
+*MSSQL 2019*
+
+# Test environment
+
+For testing, you can use docker to build up the temp testing environment.
+please find the guide in TestEnvironment.
