@@ -12,7 +12,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.BusinessLayer.Logics;
 using WebAPI.DataLayer.DatabaseContext;
+using WebAPI.DataLayer.Repositorys;
+using WebAPI.DataLayer.UnitOfWork;
 using WebAPI.Domain.Interfaces.Logics;
+using WebAPI.Domain.Interfaces.Repositorys;
+using WebAPI.Domain.Interfaces.UnitofWork;
 
 namespace WebAPI
 {
@@ -28,10 +32,9 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddDbContext<LocalContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-            b => b.MigrationsAssembly(typeof(LocalContext).Assembly.FullName)));
+            services.AddControllers();            
+            InitDbContext(services);
+            AddRepositorys(services);
             AddLogics(services);
         }
 
@@ -53,6 +56,19 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void InitDbContext(IServiceCollection services)
+        {
+            services.AddDbContext<LocalContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+            b => b.MigrationsAssembly(typeof(LocalContext).Assembly.FullName)));
+        }
+
+        private void AddRepositorys(IServiceCollection services)
+        {
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IAccountRepository, AccountRepository>();
         }
 
         private void AddLogics(IServiceCollection services)
