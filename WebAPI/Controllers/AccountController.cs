@@ -34,28 +34,36 @@ namespace WebAPI.ServiceLayer.Controllers
         public ActionResult<AccountDetail> Get(int id)
         {
             AccountDetail account = _logic.GetAccountDetail(id);
+            if (account == null)
+                return NotFound();
             return Ok(account);
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] AccountCreation value)
         {
-            _logic.CreateAccount(value);
-            return Ok();
+            bool success = _logic.CreateAccount(value);
+            if(success)
+                return Ok();
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
         public ActionResult Update(int id, [FromBody] AccountUpdate value)
         {
-            _logic.UpdateAccountInfo(id, value);
-            return Ok();
+            bool success = _logic.UpdateAccountInfo(id, value);
+            if (success)
+                return Ok();
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Remove(int id, [FromBody] AccountDelete value)
         {
-            _logic.DeleteAccount(id, value);
-            return Ok();
+            bool success = _logic.DeleteAccount(id, value);
+            if(success)
+                return Ok();
+            return NotFound();
         }
     }
 }
