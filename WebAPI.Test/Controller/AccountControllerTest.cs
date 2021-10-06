@@ -11,12 +11,12 @@ namespace WebAPI.Test
     public class AccountControllerTest
     {
         AccountController _controller;
-        Mock<IAccountLogic> _logic;
+        Mock<IAccountLogic> _mocklogic;
 
         public AccountControllerTest()
         {
-            _logic = new Mock<IAccountLogic>();
-            _controller = new AccountController(null, _logic.Object);
+            _mocklogic = new Mock<IAccountLogic>();
+            _controller = new AccountController(null, _mocklogic.Object);
         }
 
         [SetUp]
@@ -25,11 +25,12 @@ namespace WebAPI.Test
         }
 
         // MethodName_ExpectedBehavior_StateUnderTest
+        #region Get
         [Test]
-        public void Get_ReturnsOkWithAllAccountDetail_WhenValid()
+        public void Get_ReturnsOkWithAllAccountDetails_WhenVaild()
         {
             // Arrange
-            _logic.Setup(l => l.GetAllAccountDetail())
+            _mocklogic.Setup(l => l.GetAllAccountDetail())
                 .Returns(new List<AccountDetail>());
 
             // Act
@@ -40,5 +41,74 @@ namespace WebAPI.Test
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             Assert.IsInstanceOf<IEnumerable<AccountDetail>>(objectResult.Value);
         }
+        #endregion
+
+        #region GetById
+        [Test]
+        public void GetById_ReturnsNotFound_WhenIdNotExists()
+        {
+            // Arrange
+            _mocklogic.Setup(l => l.GetAccountDetail(It.IsAny<int>()))
+                .Returns((AccountDetail)null);
+
+            // Act
+            var result = _controller.Get(0);
+
+            // Assert
+            Assert.IsInstanceOf<NotFoundResult>(result.Result);
+        }
+        [Test]
+        public void GetById_ReturnsOkResultWithAccountDetail_WhenIdExists()
+        {
+            // Arrange
+            _mocklogic.Setup(l => l.GetAccountDetail(It.IsAny<int>()))
+                .Returns(new AccountDetail());
+
+            // Act
+            var result = _controller.Get(0);
+            var objectResult = result.Result as OkObjectResult;
+
+            // Assert
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            Assert.IsInstanceOf<AccountDetail>(objectResult.Value);
+        }
+        #endregion
+
+        #region Post
+        [Test]
+        public void Post_ReturnsBadRequest_InvalidObjectPassed()
+        {
+            // Arrange
+            // Invalid object, password over 32 length
+            AccountCreation input = new AccountCreation
+            {
+                Name = "Test",
+                Password_hash = "abcdefghijklmnopqrstuvwxyz_abcdef"
+            };
+
+            // Act
+            var result = _controller.Post(input);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(result);
+        }
+        [Test]
+        public void Post_ReturnsBadRequest_ValidObjectPassed()
+        {
+            // Arrange
+            // Valid object, password less than 32 length
+            AccountCreation input = new AccountCreation
+            {
+                Name = "Test",
+                Password_hash = "abcdefghijklmnopqrstuvwxyz_"
+            };
+
+            // Act
+            var result = _controller.Post(input);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(result);
+        }
+        #endregion
     }
 }
