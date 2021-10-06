@@ -17,6 +17,8 @@ namespace WebAPI.DataLayer.Repositorys
         public bool UpdateAccount(int id, AccountUpdate account)
         {
             Account dbaccount = this.GetById(id);
+            if ((dbaccount == null) || (account == null))
+                return false;
             dbaccount.Name = account.Name;
             dbaccount.UserGender = account.UserGender;
             return true;
