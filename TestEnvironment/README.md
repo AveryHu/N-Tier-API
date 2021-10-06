@@ -12,11 +12,11 @@ Docker-containers
 
 # Start
 
-Build API
+Build API  
 ```dotnet build .\NetCoreWebAPI.sln``` 
 
-Start SQL
+Start SQL  
 ```.\TestEnvironment\docker-compose up```
 
-Start API Service
+Start API Service  
 ```dotnet run --project .\WebAPI\WebAPI.ServiceLayer.csproj``` 
