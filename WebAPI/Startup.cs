@@ -36,6 +36,7 @@ namespace WebAPI
             InitDbContext(services);
             AddRepositorys(services);
             AddUnitOfWorkandLogics(services);
+            AddSwaggerDoc(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +46,9 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             dbContext.Database.Migrate();
 
@@ -56,6 +60,11 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void AddSwaggerDoc(IServiceCollection services)
+        {
+            services.AddSwaggerGen();
         }
 
         private void InitDbContext(IServiceCollection services)
