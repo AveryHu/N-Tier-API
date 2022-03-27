@@ -1,5 +1,5 @@
-# Net Core Web API
-	This is a .Net Core API project which only for personal practice.
+# N-Tier Architecture
+	Personal pratice of n-tier architecture by using net core
 	
 | master     |
 | :-----------:  |
@@ -7,8 +7,8 @@
  
 ## Developement environment
 
-*Visual Studio 2019*  
-*.NET Core 3.1*  
+*Visual Studio 2022*  
+*.NET Core 6*  
 *MSSQL 2019*
 
 ## Test environment
